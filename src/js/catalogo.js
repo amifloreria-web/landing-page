@@ -1,23 +1,15 @@
 /* ── CONFIG ──────────────────────────────────────── */
-const WA_NUMBER   = '521234567890';
-const CAT_URL     = 'https://api.sheety.co/1b354c0f67d98ec262fd52d69415fc59/baseDeDatosCatalogo/categoria';
-const CATALOG_URL = 'https://api.sheety.co/1b354c0f67d98ec262fd52d69415fc59/baseDeDatosCatalogo/catalogo';
+const WA_NUMBER      = '521234567890';
+const WORKER_BASE_URL = 'https://dry-leaf-5fbf.ami-floreria-web.workers.dev';
 
 /* ── WA LINKS ────────────────────────────────────── */
 const generalWa = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola AMI, vi su cat\u00E1logo y me gustar\u00EDa hacer un pedido.')}`;
 document.getElementById('nav-whatsapp').href   = generalWa;
 document.getElementById('whatsapp-float').href = generalWa;
 
-function buildWaUrl(nombre, precioStr) {
-  const msg = `Hola AMI, vi su cat\u00E1logo y me interesa: *${nombre}* (${precioStr}). \u00BFTienen disponibilidad?`;
+function buildWaUrl(nombre) {
+  const msg = `Hola AMI, vi su cat\u00E1logo y me interesa: *${nombre}*. \u00BFTienen disponibilidad?`;
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-}
-
-function formatPrice(p) {
-  return new Intl.NumberFormat('es-MX', {
-    style: 'currency', currency: 'MXN',
-    minimumFractionDigits: Number.isInteger(p) ? 0 : 2,
-  }).format(p);
 }
 
 /* ── NAVBAR SCROLL ───────────────────────────────── */
@@ -32,7 +24,7 @@ const filterEl = document.getElementById('category-filter');
 
 let rawProducts     = [];  // full list from API (catalog endpoint)
 let categories      = [];  // ordered list from categories endpoint
-let activeFilters   = new Set(); // empty = show all
+let activeFilter = ''; // empty string = show all
 let visibleProducts = [];  // products in current view (for modal navigation)
 
 /* ── HELPERS ─────────────────────────────────────── */
@@ -67,7 +59,7 @@ function renderSkeletons() {
 /* ── FILTER CHIPS ────────────────────────────────── */
 function renderFilterChips() {
   // Only show categories that actually have products
-  const catNamesWithProducts = new Set(rawProducts.map(p => p.categoria));
+  const catNamesWithProducts = new Set(rawProducts.map(p => p.categoria_id));
   const visibleCats = categories.filter(cat => catNamesWithProducts.has(cat.nombre));
 
   const chips = visibleCats.map(cat => `
@@ -93,29 +85,13 @@ function renderFilterChips() {
 
 function handleFilterClick(btn) {
   const cat = btn.dataset.cat;
-
-  if (cat === '__all__') {
-    activeFilters.clear();
-  } else {
-    if (activeFilters.has(cat)) {
-      activeFilters.delete(cat);
-    } else {
-      activeFilters.add(cat);
-    }
-    // If every visible category is individually selected, reset to "all"
-    const catNamesWithProducts = new Set(rawProducts.map(p => p.categoria));
-    const visibleCatCount = categories.filter(c => catNamesWithProducts.has(c.nombre)).length;
-    if (activeFilters.size === visibleCatCount) {
-      activeFilters.clear();
-    }
-  }
-
+  activeFilter = cat === '__all__' ? '' : cat;
   updateFilterChipStyles();
   buildCatalog();
 }
 
 function updateFilterChipStyles() {
-  const isAll  = activeFilters.size === 0;
+  const isAll  = activeFilter === '';
   const allBtn = document.getElementById('filter-all');
 
   if (allBtn) {
@@ -127,7 +103,7 @@ function updateFilterChipStyles() {
   }
 
   filterEl.querySelectorAll('.filter-chip:not(#filter-all)').forEach(btn => {
-    const active = activeFilters.has(btn.dataset.cat);
+    const active = activeFilter === btn.dataset.cat;
     btn.classList.toggle('bg-[#C04868]',         active);
     btn.classList.toggle('text-white',           active);
     btn.classList.toggle('border-[#C04868]',     active);
@@ -140,7 +116,6 @@ function updateFilterChipStyles() {
 
 /* ── CARD HTML ───────────────────────────────────── */
 function cardHTML(p, idx) {
-  const price = formatPrice(p.precio);
   return `
     <article class="product-card group cursor-pointer"
              data-pid="${idx}"
@@ -148,17 +123,16 @@ function cardHTML(p, idx) {
              role="button"
              aria-label="Ver detalle: ${escapeAttr(p.nombre)}">
       <div class="product-card-img">
-        <img src="${p.imagenUrl}"
+        <img src="${escapeAttr(p.imagen_url)}"
              alt="${escapeAttr(p.nombre)}"
              loading="lazy"
              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
              onerror="this.src='https://images.unsplash.com/photo-1490750967868-88df5691bbad?q=60&w=600'" />
       </div>
       <div class="product-card-body">
-        <span class="font-body text-[10px] uppercase tracking-[0.2em] text-primary/70 mb-1 block">${p.categoria}</span>
-        <h3 class="font-display text-xl font-medium mb-1 capitalize">${p.nombre}</h3>
-        <p class="text-sm text-[#777777] mb-3 leading-relaxed line-clamp-2">${p.descripcion}</p>
-        <p class="font-display text-2xl text-primary mb-4">${price}</p>
+        <span class="font-body text-[10px] uppercase tracking-[0.2em] text-primary/70 mb-1 block">${escapeAttr(p.categoria_id)}</span>
+        <h3 class="font-display text-xl font-medium mb-1 capitalize">${escapeAttr(p.nombre)}</h3>
+        <p class="text-sm text-[#777777] mb-3 leading-relaxed line-clamp-2">${p.descripcion || ''}</p>
         <button class="product-cta pointer-events-none" tabindex="-1">Ver detalle →</button>
       </div>
     </article>`;
@@ -166,19 +140,20 @@ function cardHTML(p, idx) {
 
 /* ── CATALOG BUILD ───────────────────────────────── */
 function buildCatalog() {
-  // Group raw products by category name
+  // Group raw products by category name, newest first (desc by id)
   const groups = {};
   categories.forEach(cat => { groups[cat.nombre] = []; });
   rawProducts.forEach(p => {
-    if (groups[p.categoria] !== undefined) {
-      groups[p.categoria].push(p);
+    if (groups[p.categoria_id] !== undefined) {
+      groups[p.categoria_id].push(p);
     }
   });
+  Object.values(groups).forEach(arr => arr.sort((a, b) => b.id - a.id));
 
   // Determine active categories
-  const activeCatSet = activeFilters.size === 0
+  const activeCatSet = activeFilter === ''
     ? new Set(categories.map(c => c.nombre))
-    : new Set(activeFilters);
+    : new Set([activeFilter]);
 
   // Build visibleProducts in category order (for modal navigation)
   visibleProducts = [];
@@ -264,15 +239,14 @@ function closeModal() {
 }
 
 function syncModal() {
-  const p     = visibleProducts[currentIdx];
-  const price = formatPrice(p.precio);
-  modalImg.src           = p.imagenUrl;
+  const p = visibleProducts[currentIdx];
+  modalImg.src           = p.imagen_url;
   modalImg.alt           = p.nombre;
   modalName.textContent  = p.nombre;
-  modalDesc.textContent  = p.descripcion;
-  modalPrice.textContent = price;
-  modalCat.textContent   = p.categoria.toUpperCase();
-  modalWa.href           = buildWaUrl(p.nombre, price);
+  modalDesc.textContent  = p.descripcion || '';
+  modalPrice.textContent = '';
+  modalCat.textContent   = p.categoria_id.toUpperCase();
+  modalWa.href           = buildWaUrl(p.nombre);
   modalCount.textContent = `${currentIdx + 1} / ${visibleProducts.length}`;
   modalCard.scrollTop    = 0;
 }
@@ -307,12 +281,12 @@ modalCard.addEventListener('touchend', e => {
 renderSkeletons();
 
 Promise.all([
-  fetch(CAT_URL).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
-  fetch(CATALOG_URL).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+  fetch(`${WORKER_BASE_URL}/categoria`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+  fetch(`${WORKER_BASE_URL}/catalogo`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
 ])
   .then(([catJson, catalogJson]) => {
-    categories  = catJson.categoria;
-    rawProducts = catalogJson.catalogo;
+    categories  = Array.isArray(catJson)     ? catJson     : (catJson.categoria  ?? []);
+    rawProducts = Array.isArray(catalogJson) ? catalogJson : (catalogJson.catalogo ?? []);
     renderFilterChips();
     buildCatalog();
   })
