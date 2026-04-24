@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>AMI Florería Hermosillo | Arreglos Florales Personalizados y Entrega el Mismo Día</title>
+  <meta name="description" content="Floristería en Hermosillo, Sonora. Ramos, arreglos fúnebres y decoración para eventos. Entrega el mismo día. ¡Pide por WhatsApp!" />
+  <meta name="keywords" content="florería hermosillo, flores hermosillo, arreglos florales hermosillo, entrega flores mismo día hermosillo" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AMI Florería Hermosillo | Arreglos Florales Personalizados" />
+  <meta property="og:description" content="Arreglos florales únicos con entrega el mismo día en Hermosillo, Sonora." />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon emoji SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F338;</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <meta property="og:title" content="Ami Florería | Arreglos Exclusivos en Hermosillo">
+  <meta property="og:description" content="Encuentra el detalle perfecto. Arreglos florales, ramos y coronas con entrega a domicilio.">
+  <meta property="og:image" content="https://anersa.runasp.net/templates/ami-floreria/assets/logo-mini.png">
+  <meta property="og:url" content="https://anersa.runasp.net/templates/ami-floreria">
+  <meta property="og:type" content="website">
+
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Tailwind config (MUST be before CDN script) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary:      '#E05B7F',
+            'primary-dk': '#C04868',
+            'primary-soft':'#FAE8EF',
+            'rose-bg':    '#FDF0F4',
+            'cream-bg':   '#FAF5F0',
+          },
+        },
+      },
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Preload hero image (LCP) -->
+  <link rel="preload" as="image" href="assets/portada.webp" type="image/webp" />
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Schema.org — Florist LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Florist",
+    "name": "AMI Florería",
+    "alternateName": "Amifloreriaymas",
+    "description": "Floristería en Hermosillo, Sonora. Arreglos florales personalizados con entrega el mismo día.",
+    "telephone": "+52-XXX-XXX-XXXX",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Blvr Gaspar Luken 796 Local 1",
+      "addressLocality": "Hermosillo",
+      "addressRegion": "Sonora",
+      "addressCountry": "MX"
+    },
+    "sameAs": ["https://www.instagram.com/amifloreriaymas"],
+    "openingHours": "Mo-Sa 09:00-20:00",
+    "priceRange": "$$"
+  }
+  </script>
+</head>
+
+<body class="font-body bg-white text-[#1A1A1A]">
+
+  <!-- ======================================================
+       NAVBAR — fixed, transparent → frosted on scroll
+  ====================================================== -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center">
+        <img src="assets/logo.png" alt="AMI Florería" class="h-10 w-auto object-contain" />
+      </a>
+      <!--<a href="#hero" class="flex items-center gap-2">
+        <span class="text-2xl leading-none">&#x1F338;</span>
+        <span class="font-display text-2xl font-medium tracking-wide text-primary">AMI</span>
+        <span class="font-body text-xs font-light tracking-[0.2em] uppercase text-[#1A1A1A] opacity-60">Florería</span>
+      </a>-->
+
+      <!-- Links (desktop) -->
+      <ul class="hidden md:flex items-center gap-8">
+        <li><a href="#productos"   class="nav-link">Productos</a></li>
+        <li><a href="#servicios"   class="nav-link">Servicios</a></li>
+        <li><a href="#testimonios" class="nav-link">Testimonios</a></li>
+        <li><a href="#faq"         class="nav-link">FAQ</a></li>
+        <li><a href="#contacto"    class="nav-link">Contacto</a></li>
+        <li><a href="catalogo.html" class="nav-link">Catálogo</a></li>
+      </ul>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-3">
+
+
+        <!-- Hamburger (mobile) -->
+        <button id="menu-toggle" aria-label="Abrir menú" class="md:hidden flex flex-col items-center justify-center gap-1.5 w-9 h-9 text-[#1A1A1A]">
+          <span class="block w-5 h-0.5 bg-current transition-all duration-200"></span>
+          <span class="block w-5 h-0.5 bg-current transition-all duration-200"></span>
+          <span class="block w-5 h-0.5 bg-current transition-all duration-200"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[#EDEDED] bg-white/97 backdrop-blur-md px-6 py-5">
+      <ul class="flex flex-col gap-5">
+        <li><a href="#productos"   class="nav-link block">Productos</a></li>
+        <li><a href="#servicios"   class="nav-link block">Servicios</a></li>
+        <li><a href="#testimonios" class="nav-link block">Testimonios</a></li>
+        <li><a href="#faq"         class="nav-link block">FAQ</a></li>
+        <li><a href="#contacto"    class="nav-link block">Contacto</a></li>
+        <li>
+          <a id="mobile-whatsapp" href="#" target="_blank" rel="noopener noreferrer"
+            class="flex items-center gap-2 text-primary font-medium">
+            &#x1F338; Pedir por WhatsApp
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ======================================================
+       MAIN — placeholders para fases 1-6
+  ====================================================== -->
+  <main>
+    <!-- ============================================================
+         FASE 1 — #hero: Split Editorial
+         Móvil: imagen arriba → contenido abajo (blanco)
+         Desktop: contenido izquierda ½ | imagen derecha ½
+         ============================================================ -->
+    <section id="hero" class="flex flex-col lg:flex-row overflow-hidden" style="min-height:100svh">
+
+      <!-- ── LEFT / BOTTOM: panel de contenido ── -->
+      <div class="hero-content-panel order-2 lg:order-1 w-full lg:w-1/2
+                  flex flex-col justify-center
+                  px-8 sm:px-14 lg:px-16 xl:px-24
+                  pt-10 pb-16 lg:py-32">
+
+        <!-- Badge entrega -->
+        <div class="hero-badge inline-flex items-center gap-2 self-start
+                    bg-white border border-[#EDEDED]
+                    text-[#777777]
+                    text-xs font-body font-medium tracking-widest uppercase
+                    rounded-full px-4 py-2 mb-8 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-[#25D366] animate-pulse inline-block"></span>
+          &#x1F4E6; Entrega en todo Hermosillo
+        </div>
+
+        <!-- Headline -->
+        <h1 class="hero-headline font-display font-normal text-[#1A1A1A]
+                   text-4xl sm:text-5xl lg:text-5xl xl:text-6xl leading-[1.12] mb-6 max-w-lg">
+          Cuando las palabras<br />
+          <em class="text-primary italic">no alcanzan,</em><br />
+          florecemos.
+        </h1>
+
+        <!-- Sub-headline -->
+        <p class="hero-sub font-body text-base sm:text-lg text-[#777777]
+                  max-w-sm leading-relaxed mb-10">
+          Arreglos florales únicos, diseñados a tu medida.<br />
+          Entrega el mismo día en Hermosillo.
+        </p>
+
+        <!-- CTAs -->
+        <div class="hero-ctas flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-14">
+          <a id="hero-whatsapp" href="#" data-wa="general" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-3 bg-[#C04868] hover:bg-[#9E3460] text-white
+                    font-body font-medium text-sm px-7 py-4 rounded-full
+                    -translate-y-0.5 shadow-xl shadow-primary/40 transition-all duration-200
+                    hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/55">
+            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+            &#x1F338; Pide tu arreglo ahora
+          </a>
+          <a href="#productos"
+             class="inline-flex items-center gap-2 text-[#777777]
+                    hover:text-primary font-body text-sm transition-colors duration-200 group">
+            Ver nuestros productos
+            <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="hero-stats flex flex-wrap gap-8 pt-8 border-t border-[#EDEDED]">
+          <div class="flex flex-col">
+            <span class="font-display text-3xl font-normal text-primary">100%</span>
+            <span class="font-body text-xs text-[#AAAAAA] uppercase tracking-widest mt-1">Personalizados</span>
+          </div>
+          <div class="w-px bg-[#EDEDED] hidden sm:block"></div>
+          <div class="flex flex-col">
+            <span class="font-display text-3xl font-normal text-primary">Mismo día</span>
+            <span class="font-body text-xs text-[#AAAAAA] uppercase tracking-widest mt-1">Entrega express</span>
+          </div>
+          <div class="w-px bg-[#EDEDED] hidden sm:block"></div>
+          <div class="flex flex-col">
+            <span class="font-display text-3xl font-normal text-primary">Directo</span>
+            <span class="font-body text-xs text-[#AAAAAA] uppercase tracking-widest mt-1">Vía WhatsApp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT / TOP: panel de imagen ── -->
+      <div class="hero-image-panel order-1 lg:order-2 w-full lg:w-1/2 h-[65vw] lg:h-auto relative">
+        <img
+          src="assets/portada.png"
+          alt="Hermoso arreglo floral de AMI Florería — Hermosillo"
+          class="hero-bg absolute inset-0 w-full h-full object-cover object-center" />
+        <div class="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#FDF0F4] to-transparent hidden lg:block"></div>
+      </div>
+
+      <!-- Indicador de scroll (solo desktop) -->
+      <div class="absolute bottom-8 left-[25%] -translate-x-1/2 hidden lg:flex flex-col items-center gap-1.5 opacity-25">
+        <span class="font-body text-[#AAAAAA] text-[10px] uppercase tracking-widest"></span>
+        <div class="w-px h-8 bg-primary hero-scroll-line"></div>
+      </div>
+    </section>
+    <!-- ============================================================
+         FASE 2 — #productos: Escaparate Visual
+         ============================================================ -->
+    <section id="productos" class="py-28 px-6 bg-white">
+      <div class="max-w-7xl mx-auto">
+
+        <!-- Section header -->
+        <div class="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <span class="font-body text-xs uppercase tracking-[0.25em] text-primary mb-3 block">Nuestros Arreglos</span>
+            <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-normal text-[#1A1A1A] leading-tight">
+              Cada flor,<br /><em class="text-primary italic">una historia única.</em>
+            </h2>
+          </div>
+          <p class="font-body text-sm text-[#777777] max-w-xs leading-relaxed">
+            Tenemos catálogo fijo o trabajos personalizados. Cada arreglo se diseña para ti, para el momento, para quien lo recibe.
+          </p>
+        </div>
+
+        <!-- Tab filters -->
+        <div class="flex flex-wrap gap-3 mb-10" role="tablist" aria-label="Categorías de productos">
+          <button class="tab-btn active" data-tab="ramos" role="tab" aria-selected="true">&#x1F339; Ramos</button>
+          <button class="tab-btn" data-tab="funerario" role="tab" aria-selected="false">&#x1F56F;️ Arreglos Fúnebres</button>
+          <button class="tab-btn" data-tab="especial" role="tab" aria-selected="false">&#x1F389; Ocasiones Especiales</button>
+        </div>
+
+        <!-- ── TAB: RAMOS ── -->
+        <div id="tab-ramos" class="tab-panel grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <article class="product-card group">
+            <div class="product-card-img">
+              <img src="/templates/ami-floreria/assets/img/432.png"
+                   alt="Ramo de rosas rojas premium" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="product-card-body">
+              <h3 class="font-display text-xl font-medium mb-1">Ramos clásicos</h3>
+              <p class="text-sm text-[#777777] mb-4 leading-relaxed">Elegancia atemporal. Rosas frescas de temporada, envueltas en papel kraft artesanal.</p>
+              <a href="#" data-wa="ramos" target="_blank" rel="noopener noreferrer" class="product-cta">Pedir por WhatsApp</a>
+            </div>
+          </article>
+
+          <article class="product-card group">
+            <div class="product-card-img">
+              <img src="/templates/ami-floreria/assets/img/345.png"
+                   alt="Ramo mixto colorido moderno" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="product-card-body">
+              <h3 class="font-display text-xl font-medium mb-1">Ramos modernos</h3>
+              <p class="text-sm text-[#777777] mb-4 leading-relaxed">Una explosión de color y textura. Flores mixtas de temporada con estilo editorial.</p>
+              <a href="#" data-wa="ramos" target="_blank" rel="noopener noreferrer" class="product-cta">Pedir por WhatsApp</a>
+            </div>
+          </article>
+
+          <article class="product-card group">
+            <div class="product-card-img">
+              <img src="/templates/ami-floreria/assets/img/324.png"
+                   alt="Ramo minimalista pastel" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="product-card-body">
+              <h3 class="font-display text-xl font-medium mb-1">Ramos personalizados</h3>
+              <p class="text-sm text-[#777777] mb-4 leading-relaxed">Suavidad y delicadeza en cada pétalo. Ideal para cumpleaños, bebés y "solo porque sí".</p>
+              <a href="#" data-wa="ramos" target="_blank" rel="noopener noreferrer" class="product-cta">Pedir por WhatsApp</a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ── TAB: FUNERARIO ── -->
+        <div id="tab-funerario" class="tab-panel hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <article class="product-card group">
+            <div class="product-card-img">
+              <img src="/templates/ami-floreria/assets/img/453.png"
+                   alt="Corona fúnebre blanca" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="product-card-body">
+              <h3 class="font-display text-xl font-medium mb-1">Coronas y arreglos funerarios</h3>
+              <p class="text-sm text-[#777777] mb-4 leading-relaxed">Flores blancas en arreglo circular. Un tributo sereno y digno para quienes más queremos.</p>
+              <a href="#" data-wa="funerario" target="_blank" rel="noopener noreferrer" class="product-cta">Solicitar información</a>
+            </div>
+          </article>
+
+          <article class="product-card group">
+            <div class="product-card-img">
+              <img src="/templates/ami-floreria/assets/img/435.png"
+                   alt="Arreglo fúnebre caja blanca" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="product-card-body">
+              <h3 class="font-display text-xl font-medium mb-1">Arreglos para ataúd</h3>
+              <p class="text-sm text-[#777777] mb-4 leading-relaxed">Lilies, crisantemos y rosas blancas en presentación rectangular. Entrega discreta y puntual.</p>
+              <a href="#" data-wa="funerario" target="_blank" rel="noopener noreferrer" class="product-cta">Solicitar información</a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ── TAB: ESPECIALES ── -->
+        <div id="tab-especial" class="tab-panel hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <article class="product-card group">
+            <div class="product-card-img">
+              <img src="/templates/ami-floreria/assets/img/234.png"
+                   alt="Decoración floral para boda" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="product-card-body">
+              <h3 class="font-display text-xl font-medium mb-1">Aniversario & Bodas</h3>
+              <p class="text-sm text-[#777777] mb-4 leading-relaxed">Arreglos que celebran el amor. Diseños románticos con rosas, peonías y flores premium.</p>
+              <a href="#" data-wa="especial" target="_blank" rel="noopener noreferrer" class="product-cta">Pedir por WhatsApp</a>
+            </div>
+          </article>
+
+          <article class="product-card group">
+            <div class="product-card-img">
+              <img src="/templates/ami-floreria/assets/img/132.png"
+                   alt="Arreglo floral para cumpleaños" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="product-card-body">
+              <h3 class="font-display text-xl font-medium mb-1">Cumpleaños & Sorpresas</h3>
+              <p class="text-sm text-[#777777] mb-4 leading-relaxed">Colores, alegría y frescura. Combinaciones vibrantes que dicen "eres especial" sin decir nada.</p>
+              <a href="#" data-wa="especial" target="_blank" rel="noopener noreferrer" class="product-cta">Pedir por WhatsApp</a>
+            </div>
+          </article>
+
+          <article class="product-card group">
+            <div class="product-card-img">
+              <img src="/templates/ami-floreria/assets/img/5675.png"
+                   alt="Caja de flores regalo especial" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            </div>
+            <div class="product-card-body">
+              <h3 class="font-display text-xl font-medium mb-1">Caja Sorpresa Premium</h3>
+              <p class="text-sm text-[#777777] mb-4 leading-relaxed">Flores en caja de lujo con dedicatoria. El regalo más elegante para cualquier ocasión.</p>
+              <a href="#" data-wa="especial" target="_blank" rel="noopener noreferrer" class="product-cta">Pedir por WhatsApp</a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Bottom note -->
+          <p class="mt-10 text-center font-body text-xs text-[#AAAAAA] italic">
+          ¿No encuentras lo que buscas? Cada arreglo es completamente personalizable — escríbenos.
+        </p>
+
+      </div>
+    </section>
+    <!-- ============================================================
+         FASE 3 — #servicios: Propuesta de Valor
+         ============================================================ -->
+    <section id="servicios" class="py-28 px-6 bg-[#FAF5F0]">
+      <div class="max-w-7xl mx-auto">
+
+        <!-- Section header -->
+        <div class="text-center mb-20">
+          <span class="font-body text-xs uppercase tracking-[0.25em] text-primary mb-3 block">Lo que hacemos</span>
+          <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-normal text-[#1A1A1A] leading-tight">
+            Más que flores,<br /><em class="text-primary italic">una experiencia completa.</em>
+          </h2>
+        </div>
+
+        <!-- Asymmetric grid: large card (1st) + 2 smaller -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+          <!-- PILAR 1 (grande, span 3) — Entregas Express -->
+          <div class="service-card-featured lg:col-span-3 flex flex-col justify-between">
+            <div>
+              <div class="service-icon mb-8">
+                <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                </svg>
+              </div>
+              <span class="font-body text-xs uppercase tracking-[0.2em] text-primary/70 mb-2 block">01 — Entrega Express</span>
+              <h3 class="font-display text-3xl sm:text-4xl font-light mb-4 leading-tight">
+                Tus flores llegan<br /><em class="italic text-primary">hoy. Sin excusas.</em>
+              </h3>
+              <p class="font-body text-sm leading-relaxed opacity-70 max-w-sm">
+                En Hermosillo, el calor es el enemigo de las flores. Nuestra logística express garantiza que cada arreglo llegue fresco al destino el mismo día que lo pides.
+              </p>
+            </div>
+            <a href="#" data-wa="general" target="_blank" rel="noopener noreferrer"
+               class="service-cta mt-10 w-fit">
+              Pedir entrega hoy
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Right column: 2 smaller cards stacked -->
+          <div class="lg:col-span-2 flex flex-col gap-6">
+
+            <!-- PILAR 2 — Eventos y Decoración -->
+            <div class="service-card flex-1">
+              <div class="service-icon mb-6">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+                </svg>
+              </div>
+              <span class="font-body text-xs uppercase tracking-[0.2em] text-primary/70 mb-2 block">02 — Eventos</span>
+              <h3 class="font-display text-2xl font-light mb-3">
+                Bodas, XV Años<br /><em class="italic text-primary">& Corporativos</em>
+              </h3>
+              <p class="font-body text-sm leading-relaxed opacity-70 mb-5">
+                Transformamos cualquier espacio en algo memorable. Flores, arcos, centros de mesa y decoración a tu medida.
+              </p>
+              <a href="#" data-wa="eventos" target="_blank" rel="noopener noreferrer" class="service-cta w-fit">
+                Cotizar evento
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </div>
+
+            <!-- PILAR 3 — Suscripción Floral -->
+            <div class="service-card flex-1">
+              <div class="service-icon mb-6">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+              </div>
+              <span class="font-body text-xs uppercase tracking-[0.2em] text-primary/70 mb-2 block">03 — Suscripción</span>
+              <h3 class="font-display text-2xl font-light mb-3">
+                Flores frescas<br /><em class="italic text-primary">cada semana</em>
+              </h3>
+              <p class="font-body text-sm leading-relaxed opacity-70 mb-5">
+                Recibe un arreglo nuevo en tu hogar u oficina sem anal o quincenalmente. Tu espacio, siempre vivo.
+              </p>
+              <a href="#" data-wa="suscripcion" target="_blank" rel="noopener noreferrer" class="service-cta w-fit">
+                Ver planes
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Trust strip -->
+        <div class="mt-20 pt-10 border-t border-primary/20 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div class="trust-item">
+            <span class="font-display text-4xl font-normal text-primary">+500</span>
+            <p class="font-body text-xs uppercase tracking-widest text-[#AAAAAA] mt-1">Arreglos entregados</p>
+          </div>
+          <div class="trust-item">
+            <span class="font-display text-4xl font-normal text-primary">100%</span>
+            <p class="font-body text-xs uppercase tracking-widest text-[#AAAAAA] mt-1">Personalizados</p>
+          </div>
+          <div class="trust-item">
+            <span class="font-display text-4xl font-normal text-primary">&lt;3h</span>
+            <p class="font-body text-xs uppercase tracking-widest text-[#AAAAAA] mt-1">Tiempo de entrega</p>
+          </div>
+          <div class="trust-item">
+            <span class="font-display text-4xl font-normal text-primary">5★</span>
+            <p class="font-body text-xs uppercase tracking-widest text-[#AAAAAA] mt-1">Valoración clientes</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- ============================================================
+         FASE 4 — #testimonios: Prueba Social con Carousel
+         ============================================================ -->
+    <section id="testimonios" class="py-28 px-6 bg-[#FDF0F4] overflow-hidden">
+      <div class="max-w-7xl mx-auto">
+
+        <!-- Section header -->
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+          <div>
+            <span class="font-body text-xs uppercase tracking-[0.25em] text-primary mb-3 block">Clientes felices</span>
+            <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-normal text-[#1A1A1A] leading-tight">
+              Lo que dicen<br /><em class="text-primary italic">en Hermosillo.</em>
+            </h2>
+          </div>
+          <!-- Carousel controls -->
+          <div class="flex items-center gap-3">
+            <button id="carousel-prev" aria-label="Testimonio anterior" class="carousel-arrow">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+            <button id="carousel-next" aria-label="Siguiente testimonio" class="carousel-arrow">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Carousel track wrapper -->
+        <div class="relative overflow-hidden">
+          <div id="carousel-track" class="flex gap-6 transition-transform duration-500 ease-in-out">
+
+            <!-- Card 1 -->
+            <article class="testimonial-card shrink-0">
+              <div class="testimonial-stars">★★★★★</div>
+              <blockquote class="testimonial-quote">
+                "Pedí un ramo el mismo día de mi aniversario y llegó en menos de dos horas. Mi esposa no podía creerlo. Los arreglos son preciosos y se nota que cada detalle está cuidado con amor."
+              </blockquote>
+              <footer class="testimonial-footer">
+                <div class="testimonial-avatar">CR</div>
+                <div>
+                  <p class="testimonial-name">Carlos R.</p>
+                  <p class="testimonial-location">Hermosillo, Sonora</p>
+                </div>
+              </footer>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="testimonial-card shrink-0">
+              <div class="testimonial-stars">★★★★★</div>
+              <blockquote class="testimonial-quote">
+                "Contraté a AMI para la decoración de la boda de mi hija y superaron todas las expectativas. El arco floral quedó de ensueño. Profesionales, puntuales y con un gusto exquisito."
+              </blockquote>
+              <footer class="testimonial-footer">
+                <div class="testimonial-avatar">ML</div>
+                <div>
+                  <p class="testimonial-name">Martha L.</p>
+                  <p class="testimonial-location">Hermosillo, Sonora</p>
+                </div>
+              </footer>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="testimonial-card shrink-0">
+              <div class="testimonial-stars">★★★★★</div>
+              <blockquote class="testimonial-quote">
+                "En un momento muy difícil, AMI nos ayudó con los arreglos fúnebres de forma discreta, rápida y con mucho respeto. El servicio fue impecable y las flores, hermosas."
+              </blockquote>
+              <footer class="testimonial-footer">
+                <div class="testimonial-avatar">PG</div>
+                <div>
+                  <p class="testimonial-name">Patricia G.</p>
+                  <p class="testimonial-location">Hermosillo, Sonora</p>
+                </div>
+              </footer>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="testimonial-card shrink-0">
+              <div class="testimonial-stars">★★★★★</div>
+              <blockquote class="testimonial-quote">
+                "Me suscribí al plan semanal y ahora mi oficina siempre huele increíble. Cada lunes llega un arreglo diferente y mis compañeros ya lo esperan con emoción. ¡Totalmente recomendado!"
+              </blockquote>
+              <footer class="testimonial-footer">
+                <div class="testimonial-avatar">JV</div>
+                <div>
+                  <p class="testimonial-name">Jorge V.</p>
+                  <p class="testimonial-location">Hermosillo, Sonora</p>
+                </div>
+              </footer>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Dot indicators -->
+        <div id="carousel-dots" class="flex justify-center gap-2 mt-10" role="tablist" aria-label="Indicadores de testimonio"></div>
+
+      </div>
+    </section>
+    <!-- ============================================================
+         FASE 5 — #faq: Preguntas Frecuentes (Accordion)
+         ============================================================ -->
+    <section id="faq" class="py-28 px-6 bg-white">
+      <div class="max-w-4xl mx-auto">
+
+        <!-- Section header -->
+        <div class="text-center mb-16">
+          <span class="font-body text-xs uppercase tracking-[0.25em] text-primary mb-3 block">Resolvemos tus dudas</span>
+          <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-normal text-[#1A1A1A] leading-tight">
+            Preguntas<br /><em class="text-primary italic">frecuentes.</em>
+          </h2>
+        </div>
+
+        <!-- Accordion -->
+        <div id="faq-accordion" class="flex flex-col gap-3">
+
+          <!-- Item 1 -->
+          <div class="faq-item open">
+            <button class="faq-trigger" aria-expanded="true">
+              <span>¿Cuánto tiempo tarda la entrega?</span>
+              <span class="faq-icon" aria-hidden="true">
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-body">
+              <p class="faq-answer">
+                Nuestros tiempos de entrega en Hermosillo son de <strong>2 a 4 horas</strong> después de confirmar tu pedido por WhatsApp. En temporadas de alta demanda (14 de febrero, Día de las Madres) te recomendamos pedirlo con un día de anticipación para garantizar tu hora preferida.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <span>¿Puedo pedir un arreglo personalizado?</span>
+              <span class="faq-icon" aria-hidden="true">
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-body">
+              <p class="faq-answer">
+                ¡Absolutamente! De hecho, <strong>todos nuestros arreglos son personalizados</strong>. No manejamos catálogo fijo. Cuéntanos la ocasión, los colores que te gustan, el presupuesto y nosotros creamos algo único para ti. Solo escríbenos por WhatsApp y lo hacemos realidad.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <span>¿Qué métodos de pago aceptan?</span>
+              <span class="faq-icon" aria-hidden="true">
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-body">
+              <p class="faq-answer">
+                Aceptamos <strong>efectivo, transferencia bancaria y pago por CoDi / SPEI</strong>. Para pedidos de eventos o suscripciones, coordinamos el método de pago directamente por WhatsApp antes de confirmar el servicio.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <span>¿Entregan fuera de Hermosillo?</span>
+              <span class="faq-icon" aria-hidden="true">
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-body">
+              <p class="faq-answer">
+                Por el momento nuestro servicio de entrega cubre <strong>Hermosillo y sus alrededores inmediatos</strong>. Si necesitas envío a otra ciudad de Sonora, contáctanos — en algunos casos podemos coordinar opciones de envío especiales dependiendo de la distancia y el tipo de arreglo.
+              </p>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <span>¿Cómo cuido mis flores para que duren más?</span>
+              <span class="faq-icon" aria-hidden="true">
+                <svg class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-body">
+              <p class="faq-answer">
+                Para prolongar la vida de tu arreglo: <strong>(1)</strong> Cambia el agua cada dos días con unas gotas de limón. <strong>(2)</strong> Corta los tallos en diagonal bajo el agua. <strong>(3)</strong> Colócalas lejos de corrientes de aire y luz directa del sol — especialmente importante en el calor de Hermosillo. <strong>(4)</strong> Retira los pétalos caídos para evitar bacterias.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CTA al pie del FAQ -->
+        <div class="mt-14 text-center">
+          <p class="font-body text-sm opacity-60 mb-5">¿Tienes otra pregunta? Estamos en WhatsApp.</p>
+          <a href="#" data-wa="general" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-3 bg-primary hover:bg-[#C04868] text-white font-body font-medium text-sm px-7 py-4 rounded-full transition-colors duration-200">
+            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+            Escribir a AMI
+          </a>
+        </div>
+
+      </div>
+    </section>
+    <!-- ============================================================
+         FASE 6 — #contacto: Footer + Mapa
+         ============================================================ -->
+    <footer id="contacto" class="bg-[#1A1A1A] text-[#FAF7F2]">
+
+      <!-- Pre-footer CTA band -->
+      <div class="border-b border-white/10 py-16 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div>
+            <h2 class="font-display text-3xl sm:text-4xl font-normal text-white leading-tight mb-2">
+              ¿Lista la ocasión?<br />
+              <em class="italic text-primary">Nosotros tenemos las flores.</em>
+            </h2>
+            <p class="font-body text-sm text-white/60">Entrega el mismo día en Hermosillo. Sin complicaciones.</p>
+          </div>
+          <a href="#" data-wa="general" target="_blank" rel="noopener noreferrer"
+             class="shrink-0 inline-flex items-center gap-3 bg-[#C04868] hover:bg-[#9E3460] text-white
+                    font-body font-medium text-sm px-8 py-4 rounded-full
+                    -translate-y-0.5 shadow-xl shadow-primary/40 transition-all duration-200
+                    hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-primary/55">
+            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+            &#x1F338; Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Main footer grid -->
+      <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+
+        <!-- Col 1: Brand + redes -->
+        <div class="flex flex-col gap-6">
+          <div>
+            <a href="#hero" class="inline-flex items-center gap-2 mb-3">
+              <span class="text-2xl">&#x1F338;</span>
+              <span class="font-display text-2xl font-medium tracking-wide text-primary">AMI</span>
+              <span class="font-body text-xs tracking-[0.2em] uppercase text-white/40">Florería</span>
+            </a>
+            <p class="font-display italic text-lg text-white/70 font-light leading-snug">
+              "Flores que expresan<br />más que palabras."
+            </p>
+          </div>
+
+          <!-- Social links -->
+          <div class="flex items-center gap-4">
+            <a href="https://www.instagram.com/amifloreriaymas" target="_blank" rel="noopener noreferrer"
+               aria-label="Instagram de AMI Florería"
+               class="footer-social-link">
+              <!-- Instagram SVG -->
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+              </svg>
+              @amifloreriaymas
+            </a>
+          </div>
+        </div>
+
+        <!-- Col 2: Info de contacto -->
+        <div class="flex flex-col gap-5">
+          <h3 class="font-body text-xs uppercase tracking-[0.2em] text-white/50">Encuéntranos</h3>
+
+          <div class="flex items-start gap-3 text-white/70">
+            <svg class="w-5 h-5 shrink-0 mt-0.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+            </svg>
+            <div>
+              <p class="font-body text-sm leading-relaxed">Blvr Gaspar Luken 796 Local 1<br />Hermosillo, Sonora, México</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 text-white/70">
+            <svg class="w-5 h-5 shrink-0 mt-0.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <div>
+              <p class="font-body text-sm leading-relaxed">Lunes – Sábado<br />9:00 am – 8:00 pm</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 text-white/70">
+            <svg class="w-5 h-5 shrink-0 mt-0.5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+            </svg>
+            <div>
+              <a href="#" data-wa="general" target="_blank" rel="noopener noreferrer"
+                 class="font-body text-sm text-primary hover:text-white transition-colors duration-200">
+                Escríbenos por WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 3: Mapa embed -->
+        <div class="rounded-xl overflow-hidden h-56 md:h-auto min-h-[200px] bg-white/10">
+          <iframe
+            title="Ubicación AMI Florería — Blvr Gaspar Luken 796, Hermosillo"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3487.123456789!2d-110.9559!3d29.0879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ce84b98dce8db3%3A0x1e1e1e1e1e1e1e1e!2sBoulevard%20Gaspar%20Luken%20796%2C%20Hermosillo%2C%20Son.!5e0!3m2!1ses!2smx!4v1714000000000!5m2!1ses!2smx"
+            width="100%"
+            height="100%"
+            style="border:0; filter: saturate(0.6) contrast(1.1);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="border-t border-white/10 py-6 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p class="font-body text-xs text-white/40">
+            © 2026 AMI Florería — Hermosillo, Sonora. Todos los derechos reservados.
+          </p>
+          <div class="flex items-center gap-5">
+            <a href="#hero"        class="footer-nav-link">Inicio</a>
+            <a href="#productos"   class="footer-nav-link">Productos</a>
+            <a href="#servicios"   class="footer-nav-link">Servicios</a>
+            <a href="#contacto"    class="footer-nav-link">Contacto</a>
+          </div>
+        </div>
+      </div>
+
+    </footer>
+  </main>
+
+  <!-- ======================================================
+       FLOATING WHATSAPP BUTTON
+  ====================================================== -->
+  <a id="whatsapp-float" href="#" target="_blank" rel="noopener noreferrer"
+     aria-label="Contactar por WhatsApp"
+     class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] hover:bg-[#1ebe5d] rounded-full shadow-xl flex items-center justify-center transition-transform duration-200 hover:scale-110">
+    <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+  </a>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
