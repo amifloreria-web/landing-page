@@ -785,6 +785,9 @@ async function handleDeleteProd(id, nombre) {
   try {
     await apiDelete('/catalogo', { id });
     products = products.filter(p => p.id !== id);
+    if (activeProdFilter !== '__all__' && !products.some(p => p.categoria_id === activeProdFilter)) {
+      activeProdFilter = '__all__';
+    }
     showToast('Producto eliminado', 'success');
     closeModal('modal-confirm');
     renderProdFilter();
