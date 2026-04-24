@@ -1,5 +1,5 @@
 /* ── CONFIG ──────────────────────────────────────── */
-const WA_NUMBER      = '521234567890';
+const WA_NUMBER      = '526623157262'; 
 const WORKER_BASE_URL = 'https://dry-leaf-5fbf.ami-floreria-web.workers.dev';
 
 /* ── WA LINKS ────────────────────────────────────── */

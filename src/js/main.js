@@ -4,15 +4,10 @@
 
 /* ── CONFIGURACIÓN ─────────────────────────────────────────── */
 // ⚠️  Reemplaza con el número real de WhatsApp de AMI (formato: 52XXXXXXXXXX)
-const WA_NUMBER = '521234567890';
+const WA_NUMBER = '526623157262';
 
 const WA_MESSAGES = {
-  general:    'Hola AMI \uD83C\uDF38, vi su web y me gustar\u00EDa hacer un pedido.',
-  ramos:      'Hola AMI \uD83C\uDF39, vi su web y me interesa un ramo de flores. \u00BFMe pueden ayudar?',
-  funerario:  'Hola AMI, necesito informaci\u00F3n sobre arreglos f\u00FAnebres. Gracias.',
-  especial:   'Hola AMI \uD83C\uDF89, me interesa un arreglo para una ocasi\u00F3n especial. \u00BFTienen disponibilidad?',
-  eventos:    'Hola AMI, estoy planeando un evento y me interesa su servicio de decoraci\u00F3n floral.',
-  suscripcion:'Hola AMI \uD83C\uDF3A, me interesa el servicio de suscripci\u00F3n floral. \u00BFMe dan m\u00E1s informaci\u00F3n?',
+  general:    'Hola AMI, vi su web y me gustar\u00EDa hacer un pedido.'
 };
 
 function buildWaUrl(msgKey) {
