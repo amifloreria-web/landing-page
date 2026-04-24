@@ -7,8 +7,8 @@ const generalWa = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Hola AM
 document.getElementById('nav-whatsapp').href   = generalWa;
 document.getElementById('whatsapp-float').href = generalWa;
 
-function buildWaUrl(nombre) {
-  const msg = `Hola AMI, vi su cat\u00E1logo y me interesa: *${nombre}*. \u00BFTienen disponibilidad?`;
+function buildWaUrl(nombre, categoria) {
+  const msg = `Hola AMI, vi su cat\u00E1logo y me interesa el producto: *${nombre}* (${categoria}). \u00BFTienen disponibilidad?`;
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
 
@@ -246,7 +246,7 @@ function syncModal() {
   modalDesc.textContent  = p.descripcion || '';
   modalPrice.textContent = '';
   modalCat.textContent   = p.categoria_id.toUpperCase();
-  modalWa.href           = buildWaUrl(p.nombre);
+  modalWa.href           = buildWaUrl(p.nombre, p.categoria_id.toUpperCase());
   modalCount.textContent = `${currentIdx + 1} / ${visibleProducts.length}`;
   modalCard.scrollTop    = 0;
 }
