@@ -59,7 +59,7 @@ function renderSkeletons() {
 /* ── FILTER CHIPS ────────────────────────────────── */
 function renderFilterChips() {
   // Only show categories that actually have products
-  const catNamesWithProducts = new Set(rawProducts.map(p => p.categoria_id));
+  const catNamesWithProducts = new Set(rawProducts.flatMap(p => p.categorias ?? []));
   const visibleCats = categories.filter(cat => catNamesWithProducts.has(cat.nombre));
 
   const chips = visibleCats.map(cat => `
@@ -130,7 +130,7 @@ function cardHTML(p, idx) {
              onerror="this.src='https://images.unsplash.com/photo-1490750967868-88df5691bbad?q=60&w=600'" />
       </div>
       <div class="product-card-body">
-        <span class="font-body text-[10px] uppercase tracking-[0.2em] text-primary/70 mb-1 block">${escapeAttr(p.categoria_id)}</span>
+        <span class="font-body text-[10px] uppercase tracking-[0.2em] text-primary/70 mb-1 block">${(p.categorias ?? []).join(' · ')}</span>
         <h3 class="font-display text-xl font-medium mb-1 capitalize">${escapeAttr(p.nombre)}</h3>
         ${p.precio != null ? `<p class="font-display text-xl font-medium text-primary mb-2">$${Number(p.precio).toFixed(2)}</p>` : ''}
         <p class="text-sm text-[#777777] mb-3 leading-relaxed line-clamp-2">${p.descripcion || ''}</p>
@@ -142,12 +142,15 @@ function cardHTML(p, idx) {
 /* ── CATALOG BUILD ───────────────────────────────── */
 function buildCatalog() {
   // Group raw products by category name, newest first (desc by id)
+  // A product with multiple categories appears in each of them
   const groups = {};
   categories.forEach(cat => { groups[cat.nombre] = []; });
   rawProducts.forEach(p => {
-    if (groups[p.categoria_id] !== undefined) {
-      groups[p.categoria_id].push(p);
-    }
+    (p.categorias ?? []).forEach(catNombre => {
+      if (groups[catNombre] !== undefined) {
+        groups[catNombre].push(p);
+      }
+    });
   });
   Object.values(groups).forEach(arr => arr.sort((a, b) => b.id - a.id));
 
@@ -156,11 +159,18 @@ function buildCatalog() {
     ? new Set(categories.map(c => c.nombre))
     : new Set([activeFilter]);
 
-  // Build visibleProducts in category order (for modal navigation)
+  // Build visibleProducts (unique, in category order)
+  // When showing all, products keep their first-category order; avoid duplicates
   visibleProducts = [];
+  const seenIds = new Set();
   categories.forEach(cat => {
     if (activeCatSet.has(cat.nombre)) {
-      visibleProducts.push(...(groups[cat.nombre] || []));
+      (groups[cat.nombre] || []).forEach(p => {
+        if (!seenIds.has(p.id)) {
+          seenIds.add(p.id);
+          visibleProducts.push(p);
+        }
+      });
     }
   });
 
@@ -246,8 +256,8 @@ function syncModal() {
   modalName.textContent  = p.nombre;
   modalDesc.textContent  = p.descripcion || '';
   modalPrice.textContent = p.precio != null ? `$${Number(p.precio).toFixed(2)}` : '';
-  modalCat.textContent   = p.categoria_id.toUpperCase();
-  modalWa.href           = buildWaUrl(p.nombre, p.categoria_id.toUpperCase());
+  modalCat.textContent   = (p.categorias ?? []).join(' · ').toUpperCase();
+  modalWa.href           = buildWaUrl(p.nombre, (p.categorias ?? []).join(', '));
   modalCount.textContent = `${currentIdx + 1} / ${visibleProducts.length}`;
   modalCard.scrollTop    = 0;
 }

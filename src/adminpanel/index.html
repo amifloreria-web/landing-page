@@ -384,13 +384,14 @@
           <span class="admin-field-error hidden" id="prod-nombre-err">El nombre es obligatorio</span>
         </div>
 
-        <!-- Categoría -->
+        <!-- Categorías -->
         <div class="admin-field">
-          <label class="admin-label" for="prod-categoria">Categoría <span class="text-primary">*</span></label>
-          <select id="prod-categoria" class="admin-input" required>
-            <option value="">— Selecciona —</option>
-          </select>
-          <span class="admin-field-error hidden" id="prod-cat-err">Selecciona una categoría</span>
+          <label class="admin-label">Categorías <span class="text-primary">*</span></label>
+          <div id="prod-categorias-wrap"
+               class="flex flex-wrap gap-2 p-3 rounded-xl border border-[#EDEDED] bg-white min-h-[48px]">
+            <!-- Pills generados por JS -->
+          </div>
+          <span class="admin-field-error hidden" id="prod-cat-err">Selecciona al menos una categoría</span>
         </div>
 
         <!-- Precio -->

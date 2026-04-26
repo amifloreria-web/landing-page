@@ -22,7 +22,7 @@ const ACTIVE_PRESET = 'medium'; // thumbnail | small | medium | large | hd
    2. ESTADO GLOBAL
    ══════════════════════════════════════════════════════════════ */
 let categories = [];   // [{nombre, orden}, ...]
-let products   = [];   // [{id, nombre, descripcion, imagen_url, categoria_id}, ...]
+let products   = [];   // [{id, nombre, descripcion, imagen_url, categorias: []}, ...]
 
 let activeProdFilter = '__all__'; // nombre de categoría o '__all__'
 
@@ -499,7 +499,7 @@ const prodFilter = document.getElementById('prod-filter');
 
 /* ── Filter chips ────────────────────────────────────────── */
 function renderProdFilter() {
-  const usedCats = new Set(products.map(p => p.categoria_id));
+  const usedCats = new Set(products.flatMap(p => p.categorias ?? []));
   const chips = categories
     .filter(c => usedCats.has(c.nombre))
     .map(c => `
@@ -528,7 +528,7 @@ function renderProdFilter() {
 function renderProdGrid() {
   const list = activeProdFilter === '__all__'
     ? products
-    : products.filter(p => p.categoria_id === activeProdFilter);
+    : products.filter(p => (p.categorias ?? []).includes(activeProdFilter));
 
   if (list.length === 0) {
     prodGrid.innerHTML = `
@@ -551,7 +551,7 @@ function renderProdGrid() {
              onerror="this.src='https://images.unsplash.com/photo-1490750967868-88df5691bbad?q=60&w=600'" />
       </div>
       <div class="admin-prod-card-body">
-        <span class="admin-prod-card-cat">${escapeAttr(p.categoria_id)}</span>
+        <span class="admin-prod-card-cat">${(p.categorias ?? []).join(', ')}</span>
         <p class="admin-prod-card-name">${escapeAttr(p.nombre)}</p>
         ${p.precio != null ? `<p class="font-display text-lg font-medium text-primary">$${Number(p.precio).toFixed(2)}</p>` : ''}
         ${p.descripcion
@@ -586,18 +586,14 @@ function renderProdGrid() {
 
 /* ── Category <select> refresh ───────────────────────────── */
 function refreshCatSelects() {
-  const sel = document.getElementById('prod-categoria');
-  const cur = sel.value;
-  sel.innerHTML = '<option value="">— Selecciona —</option>' +
-    categories.map(c => `<option value="${escapeAttr(c.nombre)}">${escapeAttr(c.nombre)}</option>`).join('');
-  if (cur) sel.value = cur;
+  renderCatPills([]);
 }
 
 /* ── Modal producto ──────────────────────────────────────── */
 const formProd      = document.getElementById('form-prod');
 const prodEditId    = document.getElementById('prod-edit-id');
 const prodNombreEl  = document.getElementById('prod-nombre');
-const prodCatEl     = document.getElementById('prod-categoria');
+const prodCatWrap   = document.getElementById('prod-categorias-wrap');
 const prodDescEl    = document.getElementById('prod-desc');
 const imgPreview    = document.getElementById('img-preview');
 const imgPlaceholder= document.getElementById('img-placeholder');
@@ -611,6 +607,38 @@ const prodImgErr    = document.getElementById('prod-img-err');
 const prodCatErr    = document.getElementById('prod-cat-err');
 const prodPrecioEl  = document.getElementById('prod-precio');
 const prodPrecioErr = document.getElementById('prod-precio-err');
+
+function getSelectedCats() {
+  return [...prodCatWrap.querySelectorAll('input[type=checkbox]:checked')].map(cb => cb.value);
+}
+
+function renderCatPills(selectedCats = []) {
+  prodCatWrap.innerHTML = categories.map(c => {
+    const checked = selectedCats.includes(c.nombre) ? 'checked' : '';
+    const id = `cat-pill-${c.nombre.replace(/\s+/g, '-')}`;
+    return `
+      <label for="${id}" class="cat-pill-label inline-flex items-center gap-1.5 cursor-pointer
+             px-3 py-1.5 rounded-full border text-xs font-body transition-colors duration-150
+             ${checked ? 'bg-primary text-white border-primary' : 'border-[#EDEDED] text-[#555] hover:border-primary hover:text-primary'}">
+        <input type="checkbox" id="${id}" value="${escapeAttr(c.nombre)}" ${checked}
+               class="sr-only" onchange="_onCatPillChange(this)" />
+        ${escapeAttr(c.nombre)}
+      </label>`;
+  }).join('');
+}
+
+window._onCatPillChange = function(cb) {
+  const label = cb.closest('label');
+  if (cb.checked) {
+    label.classList.add('bg-primary', 'text-white', 'border-primary');
+    label.classList.remove('border-[#EDEDED]', 'text-[#555]', 'hover:border-primary', 'hover:text-primary');
+  } else {
+    label.classList.remove('bg-primary', 'text-white', 'border-primary');
+    label.classList.add('border-[#EDEDED]', 'text-[#555]', 'hover:border-primary', 'hover:text-primary');
+  }
+  prodCatErr.classList.add('hidden');
+  prodCatWrap.classList.remove('error');
+};
 
 function resetImageUI() {
   _pendingImgFile  = null;
@@ -634,9 +662,10 @@ function openProdModal(id = null) {
   formProd.reset();
   resetImageUI();
   [prodNombreErr, prodImgErr, prodCatErr, prodPrecioErr].forEach(el => el.classList.add('hidden'));
-  [prodNombreEl, prodCatEl, prodPrecioEl].forEach(el => el.classList.remove('error'));
+  [prodNombreEl, prodPrecioEl].forEach(el => el.classList.remove('error'));
+  prodCatWrap.classList.remove('error');
 
-  refreshCatSelects();
+  refreshCatSelects(); // renders pills
 
   if (id !== null) {
     const prod = products.find(p => p.id === id);
@@ -644,7 +673,7 @@ function openProdModal(id = null) {
     modalProdTitle.textContent = 'Editar producto';
     prodEditId.value           = prod.id;
     prodNombreEl.value         = prod.nombre;
-    prodCatEl.value            = prod.categoria_id;
+    renderCatPills(prod.categorias ?? []);
     prodPrecioEl.value         = prod.precio ?? '';
     prodDescEl.value           = prod.descripcion || '';
     _currentImgUrl             = prod.imagen_url;
@@ -705,12 +734,12 @@ btnImgRemove.addEventListener('click', e => {
 formProd.addEventListener('submit', async e => {
   e.preventDefault();
 
-  const isEdit  = !!prodEditId.value;
-  const nombre  = prodNombreEl.value.trim();
-  const catId   = prodCatEl.value;
-  const desc    = prodDescEl.value.trim();
-  const precio  = parseFloat(prodPrecioEl.value);
-  const hasImg  = !!_pendingImgFile || (!_imgWasRemoved && !!_currentImgUrl);
+  const isEdit   = !!prodEditId.value;
+  const nombre   = prodNombreEl.value.trim();
+  const categorias = getSelectedCats();
+  const desc     = prodDescEl.value.trim();
+  const precio   = parseFloat(prodPrecioEl.value);
+  const hasImg   = !!_pendingImgFile || (!_imgWasRemoved && !!_currentImgUrl);
 
   // Validation
   let valid = true;
@@ -719,9 +748,9 @@ formProd.addEventListener('submit', async e => {
     prodNombreEl.classList.add('error');
     valid = false;
   }
-  if (!catId) {
+  if (categorias.length === 0) {
     prodCatErr.classList.remove('hidden');
-    prodCatEl.classList.add('error');
+    prodCatWrap.classList.add('error');
     valid = false;
   }
   if (!hasImg) {
@@ -758,7 +787,7 @@ formProd.addEventListener('submit', async e => {
       imagen_public_id = (!_imgWasRemoved && existing) ? (existing.imagen_public_id || '') : '';
     }
 
-    const payload = { nombre, descripcion: desc, imagen_url, imagen_public_id, categoria_id: catId, precio };
+    const payload = { nombre, descripcion: desc, imagen_url, imagen_public_id, categorias, precio };
 
     if (isEdit) {
       payload.id = +prodEditId.value;
@@ -795,7 +824,7 @@ async function handleDeleteProd(id, nombre) {
   try {
     await apiDelete('/catalogo', { id });
     products = products.filter(p => p.id !== id);
-    if (activeProdFilter !== '__all__' && !products.some(p => p.categoria_id === activeProdFilter)) {
+    if (activeProdFilter !== '__all__' && !products.some(p => (p.categorias ?? []).includes(activeProdFilter))) {
       activeProdFilter = '__all__';
     }
     showToast('Producto eliminado', 'success');
