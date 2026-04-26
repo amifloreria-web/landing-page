@@ -152,7 +152,6 @@ function buildCatalog() {
       }
     });
   });
-  Object.values(groups).forEach(arr => arr.sort((a, b) => b.id - a.id));
 
   // Determine active categories
   const activeCatSet = activeFilter === ''

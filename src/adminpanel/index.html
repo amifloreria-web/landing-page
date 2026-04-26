@@ -223,13 +223,22 @@
           <span class="font-body text-xs uppercase tracking-[0.25em] text-primary mb-1 block">Gestión</span>
           <h1 class="font-display text-4xl font-normal text-[#1A1A1A] leading-tight">Catálogo</h1>
         </div>
-        <button id="btn-add-prod"
-                class="admin-btn-primary flex items-center gap-2">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-          </svg>
-          Nuevo producto
-        </button>
+        <div class="flex items-center gap-2">
+          <button id="btn-reorder-prod"
+                  class="admin-btn-secondary flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+            Re-ordenar
+          </button>
+          <button id="btn-add-prod"
+                  class="admin-btn-primary flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+            </svg>
+            Nuevo producto
+          </button>
+        </div>
       </div>
 
       <!-- Filter by category -->
@@ -268,6 +277,16 @@
           </div>
         </div>
       </div>
+
+      <!-- Reorder list (hidden by default) -->
+      <div id="prod-reorder-banner" class="hidden mb-4 flex items-center gap-3 px-4 py-3 rounded-xl bg-primary-soft border border-primary/20">
+        <svg class="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20A10 10 0 0012 2z"/>
+        </svg>
+        <p class="font-body text-xs text-primary flex-1">Arrastra los productos para cambiar su orden. Los cambios se guardan automáticamente al soltar.</p>
+        <button id="btn-exit-reorder" class="admin-btn-secondary text-xs py-1 px-3">Salir</button>
+      </div>
+      <ul id="prod-reorder-list" class="hidden flex flex-col gap-2"></ul>
 
     </section><!-- /tab-products -->
 
