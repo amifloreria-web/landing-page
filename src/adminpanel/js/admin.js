@@ -531,9 +531,10 @@ function renderProdFilter() {
 
 /* ── Product grid ────────────────────────────────────────── */
 function renderProdGrid() {
-  const list = activeProdFilter === '__all__'
-    ? products
-    : products.filter(p => (p.categorias ?? []).includes(activeProdFilter));
+  const list = (activeProdFilter === '__all__'
+    ? [...products]
+    : products.filter(p => (p.categorias ?? []).includes(activeProdFilter)))
+    .sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0) || a.id - b.id);
 
   if (list.length === 0) {
     prodGrid.innerHTML = `
@@ -622,9 +623,10 @@ function exitReorderMode() {
 function renderReorderList() {
   if (_reorderSortable) { _reorderSortable.destroy(); _reorderSortable = null; }
 
-  const list = activeProdFilter === '__all__'
+  const list = (activeProdFilter === '__all__'
     ? [...products]
-    : products.filter(p => (p.categorias ?? []).includes(activeProdFilter));
+    : products.filter(p => (p.categorias ?? []).includes(activeProdFilter)))
+    .sort((a, b) => (a.orden ?? 0) - (b.orden ?? 0) || a.id - b.id);
 
   if (list.length === 0) {
     prodReorderList.innerHTML = `
@@ -659,33 +661,48 @@ function renderReorderList() {
     ghostClass:  'sortable-ghost',
     chosenClass: 'sortable-chosen',
     onEnd: async () => {
-      const items = [...prodReorderList.querySelectorAll('li[data-id]')].map((li, idx) => ({
-        id:    +li.dataset.id,
-        orden: idx + 1,
-      }));
+      // IDs de los productos visibles en su nuevo orden (drag)
+      const visibleNewOrder = [...prodReorderList.querySelectorAll('li[data-id]')]
+        .map(li => +li.dataset.id);
+      const visibleSet = new Set(visibleNewOrder);
 
-      // Optimistic local update
-      items.forEach(({ id, orden }) => {
+      // Todos los productos ordenados por su orden actual
+      const allSorted = [...products].sort((a, b) => a.orden - b.orden || a.id - b.id);
+
+      // Índices en allSorted donde están los productos visibles
+      const filteredIndices = [];
+      allSorted.forEach((p, i) => { if (visibleSet.has(p.id)) filteredIndices.push(i); });
+
+      // Colocar los productos visibles en esos slots con el nuevo orden del drag
+      filteredIndices.forEach((slotIdx, i) => {
+        allSorted[slotIdx] = products.find(p => p.id === visibleNewOrder[i]);
+      });
+
+      // Asignar orden secuencial a TODOS y enviar la lista completa
+      const allItems = allSorted.map((p, i) => ({ id: p.id, orden: i + 1 }));
+
+      // Actualización optimista local
+      allItems.forEach(({ id, orden }) => {
         const p = products.find(x => x.id === id);
         if (p) p.orden = orden;
       });
 
-      // Show saving indicator on all rows
-      items.forEach(({ id }) => {
+      // Indicadores de guardado solo en las filas visibles
+      visibleNewOrder.forEach(id => {
         const el = document.getElementById(`reorder-saving-${id}`);
         if (el) el.innerHTML = `<span class="admin-spinner w-3 h-3 border-[2px]"></span>`;
       });
 
       try {
-        await apiPut('/catalogo/reorder', items);
-        items.forEach(({ id }) => {
+        await apiPut('/catalogo/reorder', allItems);
+        visibleNewOrder.forEach(id => {
           const el = document.getElementById(`reorder-saving-${id}`);
           if (el) el.innerHTML = `✓`;
           setTimeout(() => { if (el) el.innerHTML = ''; }, 1500);
         });
       } catch (err) {
         showToast(err.message, 'error');
-        items.forEach(({ id }) => {
+        visibleNewOrder.forEach(id => {
           const el = document.getElementById(`reorder-saving-${id}`);
           if (el) el.innerHTML = '';
         });
