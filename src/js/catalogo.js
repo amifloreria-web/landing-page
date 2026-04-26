@@ -132,6 +132,7 @@ function cardHTML(p, idx) {
       <div class="product-card-body">
         <span class="font-body text-[10px] uppercase tracking-[0.2em] text-primary/70 mb-1 block">${escapeAttr(p.categoria_id)}</span>
         <h3 class="font-display text-xl font-medium mb-1 capitalize">${escapeAttr(p.nombre)}</h3>
+        ${p.precio != null ? `<p class="font-display text-xl font-medium text-primary mb-2">$${Number(p.precio).toFixed(2)}</p>` : ''}
         <p class="text-sm text-[#777777] mb-3 leading-relaxed line-clamp-2">${p.descripcion || ''}</p>
         <button class="product-cta pointer-events-none" tabindex="-1">Ver detalle →</button>
       </div>
@@ -244,7 +245,7 @@ function syncModal() {
   modalImg.alt           = p.nombre;
   modalName.textContent  = p.nombre;
   modalDesc.textContent  = p.descripcion || '';
-  modalPrice.textContent = '';
+  modalPrice.textContent = p.precio != null ? `$${Number(p.precio).toFixed(2)}` : '';
   modalCat.textContent   = p.categoria_id.toUpperCase();
   modalWa.href           = buildWaUrl(p.nombre, p.categoria_id.toUpperCase());
   modalCount.textContent = `${currentIdx + 1} / ${visibleProducts.length}`;

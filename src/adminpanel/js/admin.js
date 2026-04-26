@@ -553,6 +553,7 @@ function renderProdGrid() {
       <div class="admin-prod-card-body">
         <span class="admin-prod-card-cat">${escapeAttr(p.categoria_id)}</span>
         <p class="admin-prod-card-name">${escapeAttr(p.nombre)}</p>
+        ${p.precio != null ? `<p class="font-display text-lg font-medium text-primary">$${Number(p.precio).toFixed(2)}</p>` : ''}
         ${p.descripcion
           ? `<p class="admin-prod-card-desc">${escapeAttr(p.descripcion)}</p>`
           : ''}
@@ -608,6 +609,8 @@ const modalProdTitle= document.getElementById('modal-prod-title');
 const prodNombreErr = document.getElementById('prod-nombre-err');
 const prodImgErr    = document.getElementById('prod-img-err');
 const prodCatErr    = document.getElementById('prod-cat-err');
+const prodPrecioEl  = document.getElementById('prod-precio');
+const prodPrecioErr = document.getElementById('prod-precio-err');
 
 function resetImageUI() {
   _pendingImgFile  = null;
@@ -630,8 +633,8 @@ function setImagePreview(url) {
 function openProdModal(id = null) {
   formProd.reset();
   resetImageUI();
-  [prodNombreErr, prodImgErr, prodCatErr].forEach(el => el.classList.add('hidden'));
-  [prodNombreEl, prodCatEl].forEach(el => el.classList.remove('error'));
+  [prodNombreErr, prodImgErr, prodCatErr, prodPrecioErr].forEach(el => el.classList.add('hidden'));
+  [prodNombreEl, prodCatEl, prodPrecioEl].forEach(el => el.classList.remove('error'));
 
   refreshCatSelects();
 
@@ -642,6 +645,7 @@ function openProdModal(id = null) {
     prodEditId.value           = prod.id;
     prodNombreEl.value         = prod.nombre;
     prodCatEl.value            = prod.categoria_id;
+    prodPrecioEl.value         = prod.precio ?? '';
     prodDescEl.value           = prod.descripcion || '';
     _currentImgUrl             = prod.imagen_url;
     setImagePreview(prod.imagen_url);
@@ -705,6 +709,7 @@ formProd.addEventListener('submit', async e => {
   const nombre  = prodNombreEl.value.trim();
   const catId   = prodCatEl.value;
   const desc    = prodDescEl.value.trim();
+  const precio  = parseFloat(prodPrecioEl.value);
   const hasImg  = !!_pendingImgFile || (!_imgWasRemoved && !!_currentImgUrl);
 
   // Validation
@@ -721,6 +726,11 @@ formProd.addEventListener('submit', async e => {
   }
   if (!hasImg) {
     prodImgErr.classList.remove('hidden');
+    valid = false;
+  }
+  if (isNaN(precio) || precio < 0) {
+    prodPrecioErr.classList.remove('hidden');
+    prodPrecioEl.classList.add('error');
     valid = false;
   }
   if (!valid) return;
@@ -748,7 +758,7 @@ formProd.addEventListener('submit', async e => {
       imagen_public_id = (!_imgWasRemoved && existing) ? (existing.imagen_public_id || '') : '';
     }
 
-    const payload = { nombre, descripcion: desc, imagen_url, imagen_public_id, categoria_id: catId };
+    const payload = { nombre, descripcion: desc, imagen_url, imagen_public_id, categoria_id: catId, precio };
 
     if (isEdit) {
       payload.id = +prodEditId.value;
